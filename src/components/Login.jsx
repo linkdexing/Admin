@@ -1,69 +1,62 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useHistory } from "react-router";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
-const Login = () => {
-  const history = useHistory();
+const Login = ({ setLoggedIn }) => {
+  const { register, handleSubmit } = useForm();
 
-  const [username, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const loginSubmit = () => {
-    const userData = {
-      username,
-      password,
-    };
-
+  const loginSubmit = (values) => {
     axios
-      .post("http://localhost:4000/api/v1/admin", userData, {
+      .post("http://localhost:4000/api/v1/admin", values, {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("isSuperAdmin", true);
-        history.push("/dashboard");
+        localStorage.setItem("linkdexing_admin_token", response.data.token);
+        setLoggedIn(true);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
       });
   };
 
-  if (localStorage.getItem("isSuperAdmin") === "true") {
-    history.push("/dashboard");
-  }
-
   return (
     <div>
-      <div className="container mt-4">
+      <div className='container mt-4'>
         <h2>Login</h2>
-        <div className="row mt-3">
-          <div className="col-md-4">
-            <div className="mb-3">
-              <input
-                type="text"
-                className="form-control"
-                id="email"
-                placeholder="Email ID"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+        <form onSubmit={handleSubmit(loginSubmit)}>
+          <div className='row mt-3'>
+            <div className='col-md-4'>
+              <div className='mb-3'>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='email'
+                  placeholder='Email ID'
+                  {...register("email", {
+                    required: true,
+                  })}
+                />
+              </div>
+              <div className='mb-3'>
+                <input
+                  type='password'
+                  className='form-control'
+                  id='password'
+                  placeholder='Password'
+                  {...register("password", {
+                    required: true,
+                  })}
+                />
+              </div>
+              <button type='submit' className='btn btn-primary'>
+                Login
+              </button>
             </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={loginSubmit}
-            >
-              Login
-            </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
