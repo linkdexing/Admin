@@ -21,8 +21,6 @@ export default function Manage_users() {
             .asDays()
         );
 
-        console.log(moment(Date.now()));
-
         if (order.remaining_days < 0) {
           order.remaining_days = 0;
         }
@@ -44,7 +42,7 @@ export default function Manage_users() {
           <table className="table table-hover table-responsive">
             <thead>
               <tr>
-                <th scope="col">Dripfeed</th>
+                <th scope="col">Remaining Days</th>
                 <th scope="col"># of links</th>
                 <th scope="col">Links</th>
                 <th scope="col">Created at</th>
@@ -55,7 +53,7 @@ export default function Manage_users() {
               {React.Children.toArray(
                 orders.map((order) => (
                   <tr className={order.isProcessed ? "table-success" : null}>
-                    <td>{order.dripfeed}</td>
+                    <td>{order.remaining_days}</td>
                     <td>{order.links.split("\n").length}</td>
                     <td>{order.links}</td>
                     <td>{order.createdAt}</td>
