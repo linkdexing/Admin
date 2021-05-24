@@ -29,8 +29,8 @@ const Header = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a href="/" className="nav-link active">
-                About us
+              <a href="/Manage_users" className="nav-link active">
+                Manage-Users
               </a>
             </li>
           </ul>
