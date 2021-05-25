@@ -19,26 +19,30 @@ export default function Dashboard() {
   };
 
   return (
-    <div className='container mt-4'>
-      <label htmlFor='dripfeed'>Dripfeed</label>
+    <div className="container mt-4 mx-auto" style={{ maxWidth: "40%" }}>
+      <label htmlFor="dripfeed">Dripfeed</label>
       <select
-        className='form-select'
-        aria-label='Dripfeed'
+        className="form-select"
+        aria-label="Dripfeed"
         onChange={handleChange}
       >
         <option selected>Select a number</option>
-        {Array.from({ length: 31 }, (_, i) => i + 1).map((value) => (
+        {Array.from({ length: 30 }, (_, i) => i + 1).map((value) => (
           <option value={value}>{value}</option>
         ))}
       </select>
 
-      <div className='mt-4'>
+      <div className="mt-4">
         <h3>Links</h3>
-        <ul className='list-group'>
-          {React.Children.toArray(
-            links.map((link) => <li className='list-group-item'>{link}</li>)
-          )}
-        </ul>
+        <div
+          style={{
+            lineHeight: "0.7rem",
+            fontSize: "12px",
+            fontFamily: "monospace",
+          }}
+        >
+          {React.Children.toArray(links.map((link) => <div>{link}</div>))}
+        </div>
       </div>
     </div>
   );
