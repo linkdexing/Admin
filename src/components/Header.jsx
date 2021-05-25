@@ -1,41 +1,13 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { privateApi } from "../api";
-import { userUrl } from "../api/endpoints";
+import React from "react";
 
 const Header = () => {
-  const { register, handleSubmit } = useForm();
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let { users } = (await privateApi.get(`${userUrl}/search`)).data;
-      setUsers(users);
-    };
-    fetchData();
-  }, []);
-
-  const onSubmit = async (values) => {
-    try {
-      let { users } = (
-        await privateApi.get(`${userUrl}/search`, {
-          params: { q: values.search },
-        })
-      ).data;
-      setUsers(users);
-    } catch (err) {
-      toast.error(err.response.data.message);
-    }
-  };
-
   return (
     <nav
       className="navbar navbar-dark bg-dark navbar-expand-lg"
       style={{ minHeight: 80, fontSize: 20 }}
     >
       <div className="container-fluid">
+        {" "}
         <a href="/" className="navbar-brand">
           Linkdexing
         </a>
@@ -61,26 +33,6 @@ const Header = () => {
               <a href="/Manage_users" className="nav-link active">
                 Manage-Users
               </a>
-            </li>
-            <li className="nav-item">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-group">
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="search"
-                    placeholder="Search User"
-                    {...register("search", {
-                      required: true,
-                    })}
-                  />
-                  <input
-                    type="submit"
-                    value="search"
-                    className="btn btn-primary"
-                  />
-                </div>
-              </form>
             </li>
           </ul>
         </div>

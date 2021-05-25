@@ -1,7 +1,7 @@
-import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { privateApi } from "../api";
 import { orderUrl } from "../api/endpoints";
+import Search from "./Search";
 
 export default function Dashboard() {
   const [links, setLinks] = useState([]);
@@ -19,29 +19,38 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="container mt-4 mx-auto" style={{ maxWidth: "40%" }}>
-      <label htmlFor="dripfeed">Dripfeed</label>
-      <select
-        className="form-select"
-        aria-label="Dripfeed"
-        onChange={handleChange}
-      >
-        <option selected>Select a number</option>
-        {Array.from({ length: 30 }, (_, i) => i + 1).map((value) => (
-          <option value={value}>{value}</option>
-        ))}
-      </select>
+    <div className="row">
+      <div className="col-7">
+        <div className="container mt-4 mx-auto" style={{ maxWidth: "60%" }}>
+          <label htmlFor="dripfeed">Dripfeed</label>
+          <select
+            className="form-select"
+            aria-label="Dripfeed"
+            onChange={handleChange}
+          >
+            <option selected>Select a number</option>
+            {Array.from({ length: 30 }, (_, i) => i + 1).map((value) => (
+              <option value={value}>{value}</option>
+            ))}
+          </select>
 
-      <div className="mt-4">
-        <h3>Links</h3>
-        <div
-          style={{
-            lineHeight: "0.7rem",
-            fontSize: "12px",
-            fontFamily: "monospace",
-          }}
-        >
-          {React.Children.toArray(links.map((link) => <div>{link}</div>))}
+          <div className="mt-4">
+            <h3>Links</h3>
+            <div
+              style={{
+                lineHeight: "0.9rem",
+                fontSize: "13px",
+                fontFamily: "monospace",
+              }}
+            >
+              {React.Children.toArray(links.map((link) => <div>{link}</div>))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="col-3">
+        <div className="container mt-4">
+          <Search />
         </div>
       </div>
     </div>
