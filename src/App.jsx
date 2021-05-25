@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import { useEffect, useState } from "react";
 import { privateApi } from "./api";
 import { authUrl } from "./api/endpoints";
+import { toast } from "react-toastify";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -23,6 +24,7 @@ function App() {
           setLoading(false);
         }
       } catch (err) {
+        toast.error(err.response?.data?.error || err.response?.data?.message);
         setLoading(false);
       }
     };
