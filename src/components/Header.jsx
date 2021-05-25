@@ -6,7 +6,7 @@ import { privateApi } from "../api";
 import { userUrl } from "../api/endpoints";
 
 const Header = () => {
-  const { handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -19,25 +19,7 @@ const Header = () => {
 
   const onSubmit = async (values) => {
     try {
-      axios.get(`${userUrl}/search`, function (req, res, next) {
-        var q = req.query.q;
-        setUsers
-          .find(
-            {
-              email: {
-                $regex: new RegExp(q),
-              },
-            },
-            {
-              _id: 0,
-              __v: 0,
-            },
-            function (err, data) {
-              res.json(data);
-            }
-          )
-          .limit(10);
-      });
+      privateApi.get(`${userUrl}/search`, { params: { q: values.search } });
     } catch (err) {
       toast.error(err.response.data.message);
     }
@@ -83,6 +65,9 @@ const Header = () => {
                     type="text"
                     name="search"
                     placeholder="Search User"
+                    {...register("search", {
+                      required: true,
+                    })}
                   />
                   <input
                     type="submit"
