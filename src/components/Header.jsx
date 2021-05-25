@@ -19,7 +19,12 @@ const Header = () => {
 
   const onSubmit = async (values) => {
     try {
-      privateApi.get(`${userUrl}/search`, { params: { q: values.search } });
+      let { users } = (
+        await privateApi.get(`${userUrl}/search`, {
+          params: { q: values.search },
+        })
+      ).data;
+      setUsers(users);
     } catch (err) {
       toast.error(err.response.data.message);
     }
