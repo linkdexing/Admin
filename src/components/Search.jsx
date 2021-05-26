@@ -60,22 +60,22 @@ const Search = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-group">
+        <div className='form-group'>
           <input
-            className="form-control"
-            type="text"
-            name="search"
-            placeholder="Search User"
+            className='form-control'
+            type='text'
+            name='search'
+            placeholder='Search User'
             {...register("search", {
               required: true,
             })}
           />
-          <div className="mt-2">
-            <input type="submit" value="Search" className="btn btn-primary" />
+          <div className='mt-2'>
+            <input type='submit' value='Search' className='btn btn-primary' />
             <button
-              type="submit"
-              value="View All"
-              className="btn btn-primary"
+              type='button'
+              value='View All'
+              className='btn btn-primary'
               style={{ marginLeft: "1rem" }}
               onClick={() => {
                 handleViewAll();
@@ -87,12 +87,12 @@ const Search = () => {
         </div>
       </form>
       <div>
-        <table className="table table-hover table-responsive">
+        <table className='table table-hover table-responsive'>
           <thead>
             <tr>
-              <th scope="col">USERS</th>
-              <th scope="col">RESTRICT</th>
-              <th scope="col">BLOCK</th>
+              <th scope='col'>USERS</th>
+              <th scope='col'>RESTRICT</th>
+              <th scope='col'>BLOCK</th>
             </tr>
           </thead>
           <tbody style={{ whiteSpace: "pre-wrap" }}>
@@ -102,16 +102,16 @@ const Search = () => {
                 <td>
                   {user.isRestrict ? (
                     <button
-                      type="button"
-                      className="btn btn-warning"
+                      type='button'
+                      className='btn btn-warning'
                       onClick={() => handleRestrict(user._id, false)}
                     >
                       UnRestrict
                     </button>
                   ) : (
                     <button
-                      type="button"
-                      className="btn btn-warning"
+                      type='button'
+                      className='btn btn-warning'
                       onClick={() => handleRestrict(user._id, true)}
                     >
                       Restrict
@@ -120,8 +120,8 @@ const Search = () => {
                 </td>
                 <td>
                   <button
-                    type="button"
-                    className="btn btn-danger"
+                    type='button'
+                    className='btn btn-danger'
                     onClick={() => handleDelete(user.email)}
                   >
                     Delete
