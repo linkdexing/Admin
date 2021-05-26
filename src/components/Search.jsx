@@ -53,7 +53,7 @@ const Search = () => {
     }
   };
 
-  const handleViewAll = async () => {
+  const handleViewAll = () => {
     setRefresh(true);
   };
 
@@ -91,6 +91,7 @@ const Search = () => {
           <thead>
             <tr>
               <th scope='col'>USERS</th>
+              <th scope='col'>Total Links</th>
               <th scope='col'>RESTRICT</th>
               <th scope='col'>BLOCK</th>
             </tr>
@@ -99,6 +100,7 @@ const Search = () => {
             {users.map((user) => (
               <tr>
                 <td>{user.email}</td>
+                <td>{user.totalLinks}</td>
                 <td>
                   {user.isRestrict ? (
                     <button
