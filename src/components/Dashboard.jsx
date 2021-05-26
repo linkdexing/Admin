@@ -20,8 +20,8 @@ export default function Dashboard() {
 
   return (
     <div className="row">
-      <div className="col-7">
-        <div className="container mt-4 mx-auto" style={{ maxWidth: "60%" }}>
+      <div className="col-8">
+        <div className="mt-4 mx-auto">
           <label htmlFor="dripfeed">Dripfeed</label>
           <select
             className="form-select"
@@ -48,7 +48,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="col-3">
+      <div className="col-4">
         <div className="container mt-4">
           <Search />
         </div>

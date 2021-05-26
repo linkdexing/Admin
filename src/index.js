@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import "react-toastify/dist/ReactToastify.css";
-import "./index.css";
+
 import { ToastContainer } from "react-toastify";
 
 ReactDOM.render(

@@ -40,7 +40,6 @@ function App() {
     <div>
       <Header />
       {!loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Dashboard />}
-      <Footer />
     </div>
   );
 }
