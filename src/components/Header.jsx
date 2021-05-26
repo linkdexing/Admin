@@ -9,7 +9,7 @@ const Header = () => {
       <div className="container-fluid">
         {" "}
         <a href="/" className="navbar-brand">
-          Linkdexing
+          <h1>Linkdexing</h1>
         </a>
         <button
           className="navbar-toggler"
@@ -27,11 +27,6 @@ const Header = () => {
             <li className="nav-item">
               <a href="/" className="nav-link active" aria-current="page">
                 Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/Manage_users" className="nav-link active">
-                Manage-Users
               </a>
             </li>
           </ul>
