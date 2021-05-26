@@ -7,15 +7,19 @@ import { userUrl } from "../api/endpoints";
 const Search = () => {
   const { register, handleSubmit } = useForm();
   const [users, setUsers] = useState([]);
-  const [searchUser, setSearchUser] = useState([]);
+
+  const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       let { users } = (await privateApi.get(`${userUrl}/search`)).data;
       setUsers(users);
     };
-    fetchData();
-  }, []);
+    if (refresh) {
+      fetchData();
+      setRefresh(false);
+    }
+  }, [refresh]);
 
   const onSubmit = async (values) => {
     try {
@@ -26,24 +30,31 @@ const Search = () => {
       ).data;
       setUsers(users);
     } catch (err) {
+      console.log("not found");
       toast.error(err.response.data.message);
     }
   };
 
-  const handleBlock = async (email) => {
+  const handleDelete = async (email) => {
     try {
-      privateApi.delete(`${userUrl}/delete/${email}`);
+      await privateApi.delete(`${userUrl}/delete/${email}`);
+      setRefresh(true);
     } catch (err) {
       toast.error(err.response.data.message);
     }
   };
 
-  const handleRestrict = async (id) => {
+  const handleRestrict = async (id, option) => {
     try {
-      privateApi.post(`${userUrl}/restrict/${id}`);
+      await privateApi.post(`${userUrl}/restrict/${id}`, { option });
+      setRefresh(true);
     } catch (err) {
       toast.error(err.response.data.message);
     }
+  };
+
+  const handleViewAll = async () => {
+    setRefresh(true);
   };
 
   return (
@@ -59,7 +70,20 @@ const Search = () => {
               required: true,
             })}
           />
-          <input type="submit" value="search" className="btn btn-primary" />
+          <div className="mt-2">
+            <input type="submit" value="Search" className="btn btn-primary" />
+            <button
+              type="submit"
+              value="View All"
+              className="btn btn-primary"
+              style={{ marginLeft: "1rem" }}
+              onClick={() => {
+                handleViewAll();
+              }}
+            >
+              View All
+            </button>
+          </div>
         </div>
       </form>
       <div>
@@ -76,21 +100,31 @@ const Search = () => {
               <tr>
                 <td>{user.email}</td>
                 <td>
-                  <button
-                    type="button"
-                    className="btn btn-warning"
-                    onClick={() => handleRestrict(user._id)}
-                  >
-                    Restrict
-                  </button>
+                  {user.isRestrict ? (
+                    <button
+                      type="button"
+                      className="btn btn-warning"
+                      onClick={() => handleRestrict(user._id, false)}
+                    >
+                      UnRestrict
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-warning"
+                      onClick={() => handleRestrict(user._id, true)}
+                    >
+                      Restrict
+                    </button>
+                  )}
                 </td>
                 <td>
                   <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={() => handleBlock(user.email)}
+                    onClick={() => handleDelete(user.email)}
                   >
-                    Block
+                    Delete
                   </button>
                 </td>
               </tr>

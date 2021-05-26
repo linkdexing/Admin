@@ -1,5 +1,4 @@
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import { useEffect, useState } from "react";

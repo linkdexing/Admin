@@ -21,7 +21,7 @@ export default function Dashboard() {
   return (
     <div className="row">
       <div className="col-8">
-        <div className="mt-4 mx-auto">
+        <div className="mt-3 mx-auto" style={{ maxWidth: "90%" }}>
           <label htmlFor="dripfeed">Dripfeed</label>
           <select
             className="form-select"
