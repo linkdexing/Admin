@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { privateApi } from '../api';
 import { orderUrl } from '../api/endpoints';
@@ -7,11 +7,13 @@ import Search from './Search';
 export default function Dashboard() {
   const [orders, setOrders] = useState([]);
   const [links, setLinks] = useState([]);
+  const [dripfeed, setDripfeed] = useState(1);
+  const [refresh, setRefresh] = useState(true);
 
-  const handleChange = async (e) => {
+  const fetchOrders = useCallback(async (dripfeed) => {
     try {
       const { orders } = (
-        await privateApi.get(`${orderUrl}/dripfeed/${e.target.value}`)
+        await privateApi.get(`${orderUrl}/dripfeed/${dripfeed}`)
       ).data;
 
       const links = orders.map((order) => order.links.split('\n')).flat();
@@ -20,6 +22,23 @@ export default function Dashboard() {
     } catch (err) {
       console.log(err);
     }
+  }, []);
+
+  useEffect(() => {
+    if (refresh) {
+      fetchOrders(dripfeed);
+      setRefresh(false);
+    }
+  }, [refresh, fetchOrders, dripfeed]);
+
+  const handleChange = async (e) => {
+    const dripfeed = e.target.value;
+    fetchOrders(dripfeed);
+    setDripfeed(dripfeed);
+  };
+
+  const handleRefresh = async () => {
+    setRefresh(true);
   };
 
   const handleProcess = async () => {
@@ -30,6 +49,8 @@ export default function Dashboard() {
 
     try {
       await privateApi.post(`${orderUrl}/process`, { orderIds });
+      setLinks([]);
+      setOrders([]);
       toast.success('Current orders processed');
     } catch (err) {
       toast.error(err.response.data.err || err.response.data.message);
@@ -49,6 +70,7 @@ export default function Dashboard() {
                 className="form-select"
                 aria-label="Dripfeed"
                 onChange={handleChange}
+                value={dripfeed}
               >
                 <option selected>Select a number</option>
                 {Array.from({ length: 30 }, (_, i) => i + 1).map((value) => (
@@ -68,7 +90,15 @@ export default function Dashboard() {
           </div>
 
           <div className="mt-4">
-            <h3>Links</h3>
+            <div className="d-flex align-items-center">
+              <div className="h3 me-3">Links</div>
+              <img
+                style={{ cursor: 'pointer' }}
+                src="/refresh.svg"
+                alt="refresh"
+                onClick={handleRefresh}
+              />
+            </div>
             <div
               style={{
                 lineHeight: '0.9rem',
