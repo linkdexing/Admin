@@ -64,7 +64,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Header />
+        <Header setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
         <Switch>
           <PrivateRoute path="/users" component={Users} loggedIn={loggedIn} />
           <PrivateRoute
