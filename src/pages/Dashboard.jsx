@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { privateApi } from '../api';
 import { orderUrl } from '../api/endpoints';
-import Search from './Search';
+import Search from '../components/Search';
 
 export default function Dashboard() {
   const [orders, setOrders] = useState([]);

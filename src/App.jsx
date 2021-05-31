@@ -1,10 +1,35 @@
-import Header from "./components/Header";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import { useEffect, useState } from "react";
-import { privateApi } from "./api";
-import { authUrl } from "./api/endpoints";
-import { toast } from "react-toastify";
+import Header from './components/Header';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import { useEffect, useState } from 'react';
+import { privateApi } from './api';
+import { authUrl } from './api/endpoints';
+import { toast } from 'react-toastify';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+
+const PublicRoute = ({
+  loggedIn,
+  setLoggedIn,
+  component: Component,
+  ...props
+}) => {
+  if (loggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
+
+  return (
+    <Route {...props} render={() => <Component setLoggedIn={setLoggedIn} />} />
+  );
+};
+
+const PrivateRoute = ({ loggedIn, component: Component, ...props }) => {
+  console.log(loggedIn);
+  if (!loggedIn) {
+    return <Redirect to="/" />;
+  }
+
+  return <Route {...props} component={Component} />;
+};
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -37,8 +62,29 @@ function App() {
 
   return (
     <div>
-      <Header />
-      {!loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Dashboard />}
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <PrivateRoute
+            path="/dashboard"
+            component={Dashboard}
+            loggedIn={loggedIn}
+          />
+          <PublicRoute
+            path="/login"
+            component={Login}
+            setLoggedIn={setLoggedIn}
+            loggedIn={loggedIn}
+          />
+          <PublicRoute
+            path="/"
+            exact
+            component={Login}
+            setLoggedIn={setLoggedIn}
+            loggedIn={loggedIn}
+          />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
