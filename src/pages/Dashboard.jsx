@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
 import { privateApi } from '../api';
 import { orderUrl } from '../api/endpoints';
@@ -56,6 +57,10 @@ export default function Dashboard() {
     }
   };
 
+  const handleCopy = () => {
+    toast.info('Links copied');
+  };
+
   return (
     <div className="container">
       <div className="mt-3 mx-auto">
@@ -85,21 +90,29 @@ export default function Dashboard() {
         </div>
 
         <div className="mt-4">
-          <div className="d-flex align-items-center">
-            <div className="h3 me-3">Links</div>
-            <img
-              style={{ cursor: 'pointer' }}
-              src="/refresh.svg"
-              alt="refresh"
-              onClick={handleRefresh}
-            />
+          <div className="d-flex align-items-center justify-content-between">
+            <div className="d-flex align-items-center">
+              <div className="h3 me-3">Links</div>
+              <img
+                style={{ cursor: 'pointer' }}
+                src="/refresh.svg"
+                alt="refresh"
+                onClick={handleRefresh}
+              />
+            </div>
+            <CopyToClipboard text={links} onCopy={handleCopy}>
+              <button className="btn btn-primary">Copy</button>
+            </CopyToClipboard>
           </div>
           <div
             style={{
               lineHeight: '0.9rem',
               fontSize: '13px',
               fontFamily: 'monospace',
+              position: 'relative',
+              border: '1px solid #000',
             }}
+            className="p-2 mt-2"
           >
             {React.Children.toArray(links.map((link) => <div>{link}</div>))}
           </div>
