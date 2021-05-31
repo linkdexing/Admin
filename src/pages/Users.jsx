@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { privateApi } from "../api";
-import { userUrl } from "../api/endpoints";
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { privateApi } from '../api';
+import { userUrl } from '../api/endpoints';
 
-const Search = () => {
+const Users = () => {
   const { register, handleSubmit } = useForm();
   const [users, setUsers] = useState([]);
 
@@ -30,7 +30,7 @@ const Search = () => {
       ).data;
       setUsers(users);
     } catch (err) {
-      console.log("not found");
+      console.log('not found');
       toast.error(err.response.data.message);
     }
   };
@@ -58,25 +58,25 @@ const Search = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-4">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='form-group'>
+        <div className="form-group">
           <input
-            className='form-control'
-            type='text'
-            name='search'
-            placeholder='Search User'
-            {...register("search", {
+            className="form-control"
+            type="text"
+            name="search"
+            placeholder="Search User"
+            {...register('search', {
               required: true,
             })}
           />
-          <div className='mt-2'>
-            <input type='submit' value='Search' className='btn btn-primary' />
+          <div className="mt-2">
+            <input type="submit" value="Search" className="btn btn-primary" />
             <button
-              type='button'
-              value='View All'
-              className='btn btn-primary'
-              style={{ marginLeft: "1rem" }}
+              type="button"
+              value="View All"
+              className="btn btn-primary"
+              style={{ marginLeft: '1rem' }}
               onClick={() => {
                 handleViewAll();
               }}
@@ -87,16 +87,16 @@ const Search = () => {
         </div>
       </form>
       <div>
-        <table className='table table-hover table-responsive'>
+        <table className="table table-hover table-responsive">
           <thead>
             <tr>
-              <th scope='col'>USERS</th>
-              <th scope='col'>Total Links</th>
-              <th scope='col'>RESTRICT</th>
-              <th scope='col'>BLOCK</th>
+              <th scope="col">USERS</th>
+              <th scope="col">Total Links</th>
+              <th scope="col">RESTRICT</th>
+              <th scope="col">BLOCK</th>
             </tr>
           </thead>
-          <tbody style={{ whiteSpace: "pre-wrap" }}>
+          <tbody style={{ whiteSpace: 'pre-wrap' }}>
             {users.map((user) => (
               <tr>
                 <td>{user.email}</td>
@@ -104,16 +104,16 @@ const Search = () => {
                 <td>
                   {user.isRestrict ? (
                     <button
-                      type='button'
-                      className='btn btn-warning'
+                      type="button"
+                      className="btn btn-warning"
                       onClick={() => handleRestrict(user._id, false)}
                     >
                       UnRestrict
                     </button>
                   ) : (
                     <button
-                      type='button'
-                      className='btn btn-warning'
+                      type="button"
+                      className="btn btn-warning"
                       onClick={() => handleRestrict(user._id, true)}
                     >
                       Restrict
@@ -122,8 +122,8 @@ const Search = () => {
                 </td>
                 <td>
                   <button
-                    type='button'
-                    className='btn btn-danger'
+                    type="button"
+                    className="btn btn-danger"
                     onClick={() => handleDelete(user.email)}
                   >
                     Delete
@@ -138,4 +138,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default Users;

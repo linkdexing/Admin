@@ -6,6 +6,7 @@ import { privateApi } from './api';
 import { authUrl } from './api/endpoints';
 import { toast } from 'react-toastify';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import Users from './pages/Users';
 
 const PublicRoute = ({
   loggedIn,
@@ -65,6 +66,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Switch>
+          <PrivateRoute path="/users" component={Users} loggedIn={loggedIn} />
           <PrivateRoute
             path="/dashboard"
             component={Dashboard}
