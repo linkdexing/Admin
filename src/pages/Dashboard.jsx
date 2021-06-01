@@ -51,7 +51,7 @@ export default function Dashboard() {
       await privateApi.post(`${orderUrl}/process`, { orderIds });
       setLinks([]);
       setOrders([]);
-      toast.success('Current orders processed');
+      toast.success('Links processed');
     } catch (err) {
       toast.error(err.response.data.err || err.response.data.message);
     }
