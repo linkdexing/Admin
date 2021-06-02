@@ -61,6 +61,8 @@ export default function Dashboard() {
     toast.info('Links copied');
   };
 
+  console.log(links);
+
   return (
     <div className="container">
       <div className="mt-3 mx-auto">
@@ -100,7 +102,7 @@ export default function Dashboard() {
                 onClick={handleRefresh}
               />
             </div>
-            <CopyToClipboard text={links} onCopy={handleCopy}>
+            <CopyToClipboard text={links.join('\n')} onCopy={handleCopy}>
               <button className="btn btn-primary">Copy</button>
             </CopyToClipboard>
           </div>
