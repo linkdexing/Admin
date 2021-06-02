@@ -61,8 +61,6 @@ export default function Dashboard() {
     toast.info('Links copied');
   };
 
-  console.log(links);
-
   return (
     <div className="container">
       <div className="mt-3 mx-auto">

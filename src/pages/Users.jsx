@@ -98,7 +98,7 @@ const Users = () => {
           </thead>
           <tbody style={{ whiteSpace: 'pre-wrap' }}>
             {users.map((user) => (
-              <tr>
+              <tr className={user.totalLinks >= 10000 ? 'table-danger' : null}>
                 <td>{user.email}</td>
                 <td>{user.totalLinks}</td>
                 <td>
