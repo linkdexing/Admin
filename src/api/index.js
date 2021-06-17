@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const baseURL = "http://localhost:4000";
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 export const publicApi = axios.create({
   baseURL,
@@ -12,7 +12,7 @@ export const privateApi = axios.create({
 
 privateApi.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("linkdexing_admin_token");
+    const token = localStorage.getItem('linkdexing_admin_token');
     if (token) {
       config.headers.authorization = `Bearer ${token}`;
     }

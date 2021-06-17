@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { publicApi } from '../api';
 
 const Login = ({ setLoggedIn }) => {
   const { register, handleSubmit } = useForm();
@@ -9,12 +10,8 @@ const Login = ({ setLoggedIn }) => {
   console.log(setLoggedIn);
 
   const loginSubmit = (values) => {
-    axios
-      .post('http://localhost:4000/api/v1/admin', values, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+    publicApi
+      .post(`/api/v1/admin`, values)
       .then((response) => {
         localStorage.setItem('linkdexing_admin_token', response.data.token);
         setLoggedIn(true);
