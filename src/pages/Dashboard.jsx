@@ -20,7 +20,10 @@ export default function Dashboard() {
       setLinks(links);
       setOrders(orders);
     } catch (err) {
-      console.log(err);
+      toast.error(
+        err.response?.data.message ||
+          'Something went wrong, Please try again later.'
+      );
     }
   }, []);
 
@@ -73,10 +76,14 @@ export default function Dashboard() {
           onChange={handleChange}
           value={dripfeed}
         >
-          <option selected>Select a number</option>
-          {Array.from({ length: 30 }, (_, i) => i + 1).map((value) => (
-            <option value={value}>{value}</option>
-          ))}
+          <option value="hash" disabled>
+            Select a number
+          </option>
+          {React.Children.toArray(
+            Array.from({ length: 30 }, (_, i) => i + 1).map((value) => (
+              <option value={value}>{value}</option>
+            ))
+          )}
         </select>
 
         <div className="col-4">

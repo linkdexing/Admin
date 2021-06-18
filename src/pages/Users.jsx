@@ -30,14 +30,17 @@ const Users = () => {
       ).data;
       setUsers(users);
     } catch (err) {
-      console.log('not found');
-      toast.error(err.response.data.message);
+      toast.error(
+        err.response.data.message ||
+          'Something went wrong, please try again later'
+      );
     }
   };
 
   const handleDelete = async (email) => {
     try {
       await privateApi.delete(`${userUrl}/delete/${email}`);
+      toast.error('User Deleted');
       setRefresh(true);
     } catch (err) {
       toast.error(err.response.data.message);
@@ -90,47 +93,53 @@ const Users = () => {
         <table className="table table-hover table-responsive">
           <thead>
             <tr>
-              <th scope="col">USERS</th>
+              <th scope="col">User Name</th>
+              <th scope="col">User Email</th>
               <th scope="col">Total Links</th>
               <th scope="col">RESTRICT</th>
               <th scope="col">BLOCK</th>
             </tr>
           </thead>
           <tbody style={{ whiteSpace: 'pre-wrap' }}>
-            {users.map((user) => (
-              <tr className={user.totalLinks >= 10000 ? 'table-danger' : null}>
-                <td>{user.email}</td>
-                <td>{user.totalLinks}</td>
-                <td>
-                  {user.isRestrict ? (
+            {React.Children.toArray(
+              users.map((user) => (
+                <tr
+                  className={user.totalLinks >= 10000 ? 'table-danger' : null}
+                >
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.totalLinks}</td>
+                  <td>
+                    {user.isRestrict ? (
+                      <button
+                        type="button"
+                        className="btn btn-warning"
+                        onClick={() => handleRestrict(user._id, false)}
+                      >
+                        UnRestrict
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn btn-warning"
+                        onClick={() => handleRestrict(user._id, true)}
+                      >
+                        Restrict
+                      </button>
+                    )}
+                  </td>
+                  <td>
                     <button
                       type="button"
-                      className="btn btn-warning"
-                      onClick={() => handleRestrict(user._id, false)}
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(user.email)}
                     >
-                      UnRestrict
+                      Delete
                     </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="btn btn-warning"
-                      onClick={() => handleRestrict(user._id, true)}
-                    >
-                      Restrict
-                    </button>
-                  )}
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => handleDelete(user.email)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

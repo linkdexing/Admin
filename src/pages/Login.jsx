@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -6,8 +5,6 @@ import { publicApi } from '../api';
 
 const Login = ({ setLoggedIn }) => {
   const { register, handleSubmit } = useForm();
-
-  console.log(setLoggedIn);
 
   const loginSubmit = (values) => {
     publicApi
@@ -18,8 +15,10 @@ const Login = ({ setLoggedIn }) => {
         // history.push('/dashboard');
       })
       .catch((err) => {
-        console.log(err);
-        toast.error(err.response?.data?.message);
+        toast.error(
+          err.response?.data?.message ||
+            'Something went wrong, please try again later'
+        );
       });
   };
 

@@ -24,7 +24,6 @@ const PublicRoute = ({
 };
 
 const PrivateRoute = ({ loggedIn, component: Component, ...props }) => {
-  console.log(loggedIn);
   if (!loggedIn) {
     return <Redirect to="/" />;
   }
