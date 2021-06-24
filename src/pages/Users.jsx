@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { privateApi } from '../api';
-import { userUrl } from '../api/endpoints';
+import { userUrl, userVariablesUrl } from '../api/endpoints';
 
 const Users = () => {
   const { register, handleSubmit } = useForm();
@@ -49,7 +49,7 @@ const Users = () => {
 
   const handleRestrict = async (id, option) => {
     try {
-      await privateApi.post(`${userUrl}/restrict/${id}`, { option });
+      await privateApi.post(`${userVariablesUrl}/restrict/${id}`, { option });
       setRefresh(true);
     } catch (err) {
       toast.error(err.response.data.message);
