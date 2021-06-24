@@ -90,17 +90,28 @@ const Users = () => {
         </div>
       </form>
       <div>
-        <table className="table table-hover table-responsive">
-          <thead>
+        <table className="table table-hover table-responsive table-bordered mt-4">
+          <thead className="text-center">
             <tr>
               <th scope="col">User Name</th>
               <th scope="col">User Email</th>
-              <th scope="col">Total Links</th>
+              <th scope="colgroup" colSpan="3">
+                Links
+              </th>
               <th scope="col">RESTRICT</th>
               <th scope="col">BLOCK</th>
             </tr>
           </thead>
           <tbody style={{ whiteSpace: 'pre-wrap' }}>
+            <tr className="text-center">
+              <th></th>
+              <th></th>
+              <th>Monthly Limit</th>
+              <th>Monthly Used</th>
+              <th>Total Links</th>
+              <th></th>
+              <th></th>
+            </tr>
             {React.Children.toArray(
               users.map((user) => (
                 <tr
@@ -108,7 +119,11 @@ const Users = () => {
                 >
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>{user.totalLinks}</td>
+
+                  <td>{user.userVariables.monthlyLimit}</td>
+                  <td>{user.userVariables.monthlyUsed}</td>
+                  <td>{user.userVariables.totalLinks}</td>
+
                   <td>
                     {user.isRestrict ? (
                       <button
