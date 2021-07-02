@@ -43,6 +43,10 @@ const Users = () => {
 
   const handleDelete = async (email) => {
     try {
+      // Deletes contact from SIB
+      await privateApi.delete(`${userUrl}/deleteSIB/${email}`);
+
+      // Deletes user from Database
       await privateApi.delete(`${userUrl}/delete/${email}`);
       toast.error('User Deleted');
       setRefresh(true);
@@ -204,7 +208,7 @@ const Users = () => {
       <div
         className="modal fade"
         id="ModalLinks"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
