@@ -143,7 +143,11 @@ const Users = () => {
             {React.Children.toArray(
               users.map((user, index) => (
                 <tr
-                  className={user.totalLinks >= 10000 ? 'table-danger' : null}
+                  className={
+                    user.userVariables.totalLinks >= 10000
+                      ? 'table-danger'
+                      : null
+                  }
                 >
                   <td>{user.name}</td>
                   <td>{user.email}</td>
@@ -163,7 +167,7 @@ const Users = () => {
                   <td>{user.userVariables.totalLinks}</td>
 
                   <td>
-                    {user.isRestrict ? (
+                    {user.userVariables.isRestrict ? (
                       <button
                         type="button"
                         className="btn btn-warning"
