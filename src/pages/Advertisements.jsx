@@ -9,7 +9,10 @@ export default function Advertisements() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
+
+  const watchType = watch('type');
 
   const onSubmit = async (values) => {
     try {
@@ -97,7 +100,8 @@ export default function Advertisements() {
                   var reader = new FileReader();
                   //Read the contents of Image File.
                   reader.readAsDataURL(file[0]);
-                  var flag = true;
+                  let flag = false;
+                  let message = '';
                   const loadOuter = async () =>
                     new Promise((resolve) => {
                       reader.onload = async function (e) {
@@ -111,22 +115,31 @@ export default function Advertisements() {
                         image.onload = function () {
                           var height = this.height;
                           var width = this.width;
-                          if (height > 100 || width > 100) {
-                            flag = false;
-                            //console.log(flag);
-                            return resolve();
+                          console.log(height, width);
+                          if (watchType === 'top-left') {
+                            if (height === 90 && width === 728) {
+                              flag = true;
+                              return resolve();
+                            } else {
+                              message =
+                                'Height must be 728 and width must be 90 for Top-Left adv.';
+                            }
+                          } else {
+                            if (height === 250 && width === 300) {
+                              flag = true;
+                              return resolve();
+                            } else {
+                              message =
+                                'Height must be 300 and width must be 250 for Right under the menu adv.';
+                            }
                           }
 
                           return resolve();
                         };
-
-                        //console.log(flag);
                       };
                     });
                   await loadOuter();
-                  return (
-                    flag || 'Height and width must not exceed required size'
-                  );
+                  return flag || message;
                 },
               })}
             />
