@@ -7,6 +7,7 @@ import { authUrl } from './api/endpoints';
 import { toast } from 'react-toastify';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Users from './pages/Users';
+import Advertisements from './pages/Advertisements';
 
 const PublicRoute = ({
   loggedIn,
@@ -69,6 +70,11 @@ function App() {
           <PrivateRoute
             path="/dashboard"
             component={Dashboard}
+            loggedIn={loggedIn}
+          />
+          <PrivateRoute
+            path="/advertisements"
+            component={Advertisements}
             loggedIn={loggedIn}
           />
           <PublicRoute

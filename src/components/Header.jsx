@@ -46,7 +46,16 @@ const Header = ({ loggedIn, setLoggedIn }) => {
                   className="nav-link active"
                   aria-current="page"
                 >
-                  Manage Users
+                  Manage_Users
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/advertisements"
+                  className="nav-link active"
+                  aria-current="page"
+                >
+                  Advertisements
                 </Link>
               </li>
             </ul>
