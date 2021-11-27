@@ -70,7 +70,7 @@ const Users = () => {
 
   const handleOpenModal = (index) => {
     setCurrentUserIndex(index);
-    setLimitValue(users[index].userVariables.monthlyLimit);
+    setLimitValue(users[index].userVariables.totalLimit);
   };
 
   const handleChange = (e) => {
@@ -127,7 +127,7 @@ const Users = () => {
             <tr>
               <th scope="col">User Name</th>
               <th scope="col">User Email</th>
-              <th scope="colgroup" colSpan="3">
+              <th scope="colgroup" colSpan="2">
                 Links
               </th>
               <th scope="col">RESTRICT</th>
@@ -138,11 +138,8 @@ const Users = () => {
             <tr className="text-center">
               <th></th>
               <th></th>
-              <th>Monthly Limit</th>
-              <th>Monthly Used</th>
-              <th>Total Links</th>
-              <th></th>
-              <th></th>
+              <th>Total Limit</th>
+              <th>Total Links Used</th>
             </tr>
             {React.Children.toArray(
               users.map((user, index) => (
@@ -157,7 +154,7 @@ const Users = () => {
                   <td>{user.email}</td>
 
                   <td className="d-flex align-items-center">
-                    {user.userVariables.monthlyLimit}{' '}
+                    {user.userVariables.totalLimit}{' '}
                     <button
                       className="ms-auto btn btn-primary"
                       data-bs-toggle="modal"
@@ -167,7 +164,7 @@ const Users = () => {
                       Edit
                     </button>
                   </td>
-                  <td>{user.userVariables.monthlyUsed}</td>
+
                   <td>{user.userVariables.totalLinks}</td>
 
                   <td>
