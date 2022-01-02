@@ -5,7 +5,7 @@ import { privateApi } from '../api';
 import { authUrl, userUrl, userVariablesUrl } from '../api/endpoints';
 
 const Users = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [users, setUsers] = useState([]);
 
   const [refresh, setRefresh] = useState(true);
@@ -32,6 +32,7 @@ const Users = () => {
           params: { q: values.search },
         })
       ).data;
+      reset();
       setUsers(users);
     } catch (err) {
       toast.error(
@@ -66,6 +67,7 @@ const Users = () => {
 
   const handleViewAll = () => {
     setRefresh(true);
+    reset();
   };
 
   const handleOpenModal = (index) => {
