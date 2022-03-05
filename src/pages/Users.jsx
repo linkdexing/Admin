@@ -146,11 +146,8 @@ const Users = () => {
             {React.Children.toArray(
               users.map((user, index) => (
                 <tr
-                  className={
-                    user.userVariables.totalLinks >= 10000
-                      ? 'table-danger'
-                      : null
-                  }
+                className={user.totalLinks >= user.totalLimit ? 'table-danger' : null}
+
                 >
                   <td>{user.name}</td>
                   <td>{user.email}</td>
